@@ -1,20 +1,36 @@
-currentBuild.displayName = "nginx: " + currentBuild.number
-
 pipeline {
     agent any
+
     stages {
-        stage('Build Docker Image') {
+        stage('Checkout') {
             steps {
-                sh "docker build . -t nginxdockerimage"
-                sh "docker rm -f \$(docker ps -q)"
+                checkout scm
             }
         }
 
-        stage('Spin Container') {
+        stage('Build and Test') {
             steps {
-                sh "docker run -itd -p 6666:80 --name nginxapp nginxdockerimage"
-            }
+                script {
+                    //dockerImage = docker.build("docker-image:latest")
+                    sh "docker build . -t  docker-image:latest"
+                }
+                script {
+                    sh "docker run -d -p 8072:80 docker-image:latest"
+                    }
+                }
+            
         }
-    
+      stage('testing container') 
+       {
+        steps
+         {
+         script
+         {
+             sh "curl http:// 10.196.154.184:8080"
+         }
+     }
+}
+
+        
     }
 }
