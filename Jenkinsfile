@@ -15,7 +15,7 @@ pipeline {
                     sh "docker build . -t  docker-image:latest"
                 }
                 script {
-                    sh "docker run -d -p 8072:80 docker-image:latest"
+                    sh "docker run -d -p 8080:80 docker-image:latest"
                     }
                 }
             
