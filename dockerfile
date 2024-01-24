@@ -1,4 +1,4 @@
- Use Nginx as the base image
+# Use Nginx as the base image
 FROM nginx:latest
 
 # Install necessary tools
